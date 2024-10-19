@@ -4,7 +4,9 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Switch } from "@/components/ui/switch"
-import { Video, MessageSquare, Pen, Circle, Sun, Moon } from "lucide-react"
+import { Video, MessageSquare, Pen, Circle, Sun, Moon, Menu } from "lucide-react"
+import { HamburgerMenuIcon } from '@radix-ui/react-icons'
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
 export default function LiveStreamPlatform() {
   const [messages, setMessages] = useState([])
@@ -40,27 +42,66 @@ export default function LiveStreamPlatform() {
     setIsDarkMode(!isDarkMode)
   }
 
+  const NavLinks = () => (
+    <>
+      <a href="#home" className="hover:text-blue-400 transition-colors">Home</a>
+      <a href="#services" className="hover:text-blue-400 transition-colors">Services</a>
+      <a href="#ai-chat" className="hover:text-blue-400 transition-colors">AI Chat</a>
+      <a href="#writing" className="hover:text-blue-400 transition-colors">Writing</a>
+      <a href="#recording" className="hover:text-blue-400 transition-colors">Recording</a>
+    </>
+  )
+
   return (
-    <div className={`min-h-screen transition-colors duration-300 ${isDarkMode ? 'bg-gradient-to-br from-gray-900 via-blue-900 to-blue-700' : 'bg-gradient-to-br from-white via-blue-100 to-blue-200'}`}>
+    <div className={`mt-14- min-h-screen transition-colors duration-300 ${isDarkMode ? 'bg-gradient-to-br from-gray-900 via-blue-900 to-blue-700' : 'bg-gradient-to-br from-white via-blue-100 to-blue-200'}`}>
       <div className={`text-${isDarkMode ? 'white' : 'gray-800'} p-8`}>
-        <nav className="backdrop-blur-md bg-white/10 dark:bg-black/10 rounded-full p-4 mb-8 flex justify-between items-center">
-          <div className="flex space-x-8">
+        {/* <nav className="backdrop-blur-md bg-white/10 dark:bg-black/10 rounded-full p-4 mb-8 flex justify-between items-center">
+          <div className="hidden sm:flex space-x-8 ">
             <a href="#home" className="hover:text-blue-400 transition-colors">Home</a>
             <a href="#services" className="hover:text-blue-400 transition-colors">Services</a>
             <a href="#ai-chat" className="hover:text-blue-400 transition-colors">AI Chat</a>
             <a href="#writing" className="hover:text-blue-400 transition-colors">Writing</a>
             <a href="#recording" className="hover:text-blue-400 transition-colors">Recording</a>
           </div>
+          <div>
+            <HamburgerMenuIcon className="h-6 w-6 sm:hidden" />
+          </div>
           <div className="flex items-center space-x-2">
             <Sun className="h-4 w-4" />
             <Switch checked={isDarkMode} onCheckedChange={toggleDarkMode} />
             <Moon className="h-4 w-4" />
           </div>
+        </nav> */}
+        <nav className="backdrop-blur-md bg-white/10 dark:bg-black/10 p-4 fixed top-0 left-0 right-0 z-50">
+          <div className="max-w-7xl mx-auto flex justify-between items-center">
+            <div className="hidden md:flex space-x-8">
+              <NavLinks />
+            </div>
+            <div className="md:hidden">
+              <Sheet>
+                <SheetTrigger asChild>
+                  <Button variant="ghotst" size="icon">
+                    <Menu className="h-6 w-6" />
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="left" className="w-[300px] sm:w-[400px]">
+                  <nav className="flex flex-col space-y-4">
+                    <NavLinks />
+                  </nav>
+                </SheetContent>
+              </Sheet>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Sun className="h-4 w-4" />
+              <Switch checked={isDarkMode} onCheckedChange={toggleDarkMode} />
+              <Moon className="h-4 w-4" />
+            </div>
+          </div>
         </nav>
 
-        <div id="home" className="text-center mb-16">
+        <div id="home" className="mt-14 text-center mb-16">
           <div className="max-w-6xl mx-auto backdrop-blur-lg bg-white/20 dark:bg-black/20 rounded-3xl p-8 shadow-2xl">
-            <h1 className="text-5xl font-bold mb-4">Welcome to LiveStream Platform</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">Welcome to LiveStream Platform</h1>
             <p className="text-xl mb-6">Stream, Chat, Create, and Connect</p>
             <Button className="bg-blue-500 text-white hover:bg-blue-600">Get Started</Button>
           </div>
@@ -120,8 +161,8 @@ export default function LiveStreamPlatform() {
               autoPlay 
               muted
             />
-            <div className='flex justify-between p-2 mt-2'>
-            <h2 className="text-3xl font-bold ">Start Recording</h2>
+            <div className='flex justify-between items-center p-2 mt-2'>
+            <h2 className="text-xl sm:text-3xl font-bold ">Video</h2>
             <Button 
               onClick={startRecording}
               className={` ${isRecording ? 'bg-red-500 hover:bg-red-600' : 'bg-blue-500 hover:bg-blue-600'}`}
